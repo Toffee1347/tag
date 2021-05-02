@@ -49,6 +49,8 @@ class BackgroundCanvas {
         let width = Math.floor(innerWidth / this.img.width) + 2;
         let height = Math.floor(innerHeight / this.img.height) + 2;
 
+        this.ctx.fillStyle = '#808080';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         for (let col = 0; col <= width; col++) {
             for (let row = 0; row <= height; row++) {
                 this.ctx.drawImage(this.img, ((col - 1) * this.img.width) - (pos.x % this.img.width), ((row - 1) * this.img.height) - (pos.y % this.img.height));
