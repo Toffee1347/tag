@@ -31,28 +31,18 @@ class Game {
             x = x[0] - x[1];
             y = y[0] - y[1];
             
-            let tan = Math.abs(Math.atan(y/x) * (180 / Math.PI));
+            this.vel.x = -(x / innerWidth);
+            this.vel.y = -(y / innerHeight);
+        });
+        window.addEventListener('touchmove', (ev) => {
+            let x = [innerWidth / 2, ev.changedTouches[0].x];
+            let y = [innerHeight / 2, ev.changedTouches[0].y];
 
-            if (x > 0 && y > 0) tan = tan;
-            else if (x > 0 && y < 0) tan = 360 - tan;
-            else if (x < 0 && y > 0) tan = 180 - tan;
-            else if (x < 0 && y < 0) tan = 180 + tan;
+            x = x[0] - x[1];
+            y = y[0] - y[1];
             
-            this.vel.x = x / innerWidth;
-            this.vel.y = y / innerHeight;
-
-            if (tan >= 270) {
-                tan -= 270;
-            }
-            else if (tan >= 180) {
-                tan -= 180;
-            }
-            else if (tan >= 90) {
-                tan -= 90;
-            }
-            else {
-                tan -= 0;
-            };
+            this.vel.x = -(x / innerWidth);
+            this.vel.y = -(y / innerHeight);
         });
     };
     addPlayer(id, player) {

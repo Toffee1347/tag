@@ -39,5 +39,14 @@
         form.children[0].value = '';
 
         socket.emit('joinGame', username);
+
+        let img = new Image();
+        img.src = '/static/img/gameAssets/player.png';
+        game.canvas.display.push({
+            type: 'image',
+            x: innerWidth / 2 - 25,
+            y: innerHeight / 2,
+            img: img
+        });
     });
 })();

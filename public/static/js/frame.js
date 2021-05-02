@@ -20,10 +20,18 @@ class Canvas {
 
         this.ctx.fillStyle = '#00000000';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        // this.display.forEach((part) => {
-        //     this.ctx.fillStyle = part.colour || '#000000';
-        //     this.ctx.fillRect(part.x, part.y, part.width, part.height);
-        // });
+        this.display.forEach((part) => {
+            try {
+                switch (part.type) {
+                    case 'image':
+                        this.ctx.drawImage(part.img, part.x, part.y);
+                    break;
+                };
+            }
+            catch (err) {
+
+            };
+        });
     };
 };
 
