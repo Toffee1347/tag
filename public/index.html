@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body style="opacity: 0; transition: all 0.5s ease-in;">
+    <div id="login" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10; transition: all 0.5s ease-in; transition-property: top;">
+        <h1>Play Tag!</h1>
+        <form>
+            <input type="text" placeholder="Username" minlength="3" maxlength="10" required>
+            <!-- <br>
+            <input type="submit" value="Play!"> -->
+        </form>
+    </div>
+
+    <section id="cover" class="back" style="opacity: 0.3;"></section>
+
+    <div class="fps">FPS: <x id="fps">0</x></div>
+    <canvas id="mainCanvas"></canvas>
+    <canvas id="backgroundCanvas"></canvas>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/ws.js"></script>
+    <script src="/static/js/game.js"></script>
+    <script src="/static/js/frame.js"></script>
+    <script src="/static/js/main.js" defer></script>
+</body>
+</html>
