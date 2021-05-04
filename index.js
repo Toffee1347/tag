@@ -4,20 +4,15 @@ const io = require('socket.io')(server);
 const fs = require('fs');
 const {Game, Player} = require('./gameServer');
 
-let connectedClients = {};
 const game = new Game(io);
 
 io.on('connection', (socket) => {
-    connectedClients[socket.id] = {
-        socket: socket
-    };
     socket.on('joinGame', (username) => {
         if (!username) return;
-        connectedClients[socket.id].username = username.substring(0, 10);
-        game.addPlayer(socket.id, username);
+        game.addPlayer(socket.id, username, socket);
     });
     socket.on('disconnect', () => {
-        delete connectedClients[socket.id];
+        
     });
 });
 

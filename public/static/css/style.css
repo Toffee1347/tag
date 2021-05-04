@@ -11,6 +11,16 @@ body {
     left: 10px;
     margin: 10px;
 }
+.coords {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    margin: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease-in;
+    color: white;
+}
 .center {
     display: flex;
     justify-content: center;
