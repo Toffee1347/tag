@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
 });
 
 app.use((req, res, next) => {
-    req.get('X-Forwarded-Proto') !== 'https' && req.get('Host') == 'snakeee.xyz' ? res.redirect(`https://${req.get('Host')}${req.url}`) : next();
+    req.get('X-Forwarded-Proto') !== 'https' && req.get('Host') == 'tiggg.herokuapp.com' ? res.redirect(`https://${req.get('Host')}${req.url}`) : next();
 });
 
 app.get('/*', (req, res) => {
