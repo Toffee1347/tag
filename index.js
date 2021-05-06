@@ -11,9 +11,6 @@ io.on('connection', (socket) => {
         if (!username) return;
         game.addPlayer(socket.id, username, socket);
     });
-    socket.on('disconnect', () => {
-        
-    });
 });
 
 app.use((req, res, next) => {

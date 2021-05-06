@@ -48,13 +48,13 @@ class Canvas {
             if (this.backgroundOpactity > 0.3) this.backgroundOpactity = 0.3;
             if (this.backgroundOpactity < 0.3) this.backgroundOpactity += (0.3 / 500) * delta;
             this.ctx.fillStyle = `rgba(0, 0, 0, ${this.backgroundOpactity})`;
-            this.ctx.fillRect(innerWidth - 20 - this.mapWidth, 20, this.mapWidth, this.mapHeight);
+            this.ctx.fillRect(innerWidth - 20 - this.mapWidth + 1, 20, this.mapWidth + 1, this.mapHeight + 1);
 
             this.map.forEach((part) => {
                 this.drawMapPoint(part);
             });
         };
-        this.ctx.font = 'Questrial 10px';
+        this.ctx.font = 'Questrial 20px';
         this.ctx.textAlign = 'center';
         this.ctx.fillStyle = '#000000';
         this.usernames.forEach((part) => {

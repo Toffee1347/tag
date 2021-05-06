@@ -1,5 +1,6 @@
 (() => {
     let game;
+    let titleScreen = true;
     const $ = (id) => document.querySelector(id);
     const canvas = $('#mainCanvas');
     window.addEventListener('DOMContentLoaded', () => {
@@ -19,7 +20,23 @@
     });
 
     socket.on('addPlayer', (id, player) => {
-        game.addPlayer(id, player)
+        if (titleScreen) return;
+        game.addPlayer(id, player);
+    });
+    socket.on('initGame', (serverGame) => {
+        Object.keys(serverGame).forEach((id) => {
+            game.addPlayer(id, serverGame[id]);
+        });
+    });
+    socket.on('disconnnect', (id) => {
+        if (!(id in game.players)) return;
+        delete game.players[id];
+    });
+    socket.on('playerMove', (id, angle, x, y) => {
+        if (!(id in game.players)) return;
+        game.players[id].player.mouseAngle = angle;
+        game.players[id].player.x = x;
+        game.players[id].player.y = y;
     });
 
     const form = $('form');
@@ -27,6 +44,15 @@
     const cover = $('#cover');
     const coords = $('#coords');
     form.addEventListener('submit', (ev) => {
+        var field = document.createElement('input');
+        field.type = 'text';
+        document.body.appendChild(field);
+        field.focus();
+        field.style.display = 'none';
+
+        document.documentElement.requestFullscreen();
+        titleScreen = false;
+        game.run = true;
         ev.preventDefault();
         let username = form.children[0].value;
         loginScreen.style.top = '-50%';

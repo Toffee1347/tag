@@ -12,21 +12,30 @@ class Game {
                 player: {
                     x: 5000,
                     y: 5000,
-                    mouseAngle: 0
+                    mouseAngle: null
                 }
             }
         };
         this.speed = 2;
+        this.run = false;
+        this.prev = null;
 
         this.canvas.runTime = (delta) => {
             if (!this.id) return this.id = socket.id;
+
+            if (this.id in this.players) {
+                if (this.prev != this.players[this.id].player.mouseAngle) {
+                    socket.emit('changeAngle', this.players[this.id].player.mouseAngle, this.players[this.id].player.x, this.players[this.id].player.y);
+                    this.prev = this.players[this.id].player.mouseAngle;
+                };
+            };
 
             let areaView = {};
             if (this.players[this.id]) {
                 if (this.players[this.id].player.x < innerWidth/2) areaView.x = 0;
                 else if (this.players[this.id].player.x > (10000 - innerWidth/2)) areaView.x = 10000 - innerWidth;
                 else areaView.x = this.players[this.id].player.x - innerWidth/2;
-                if (this.players[this.id].player.y < innerHeight/2) areaView.x = 0;
+                if (this.players[this.id].player.y < innerHeight/2) areaView.y = 0;
                 else if (this.players[this.id].player.y > (10000 - innerHeight/2)) areaView.y = 10000 - innerHeight;
                 else areaView.y = this.players[this.id].player.y - innerHeight/2;
             };
@@ -37,8 +46,10 @@ class Game {
                 let player = this.players[id];
                 if (Object.keys(this.players).length != 1 && id == 'background') return;
                 if (id != 'background') this.canvas.map.push({x: player.player.x, y: player.player.y});
-                player.player.x += (-Math.cos(player.player.mouseAngle * (Math.PI / 180))) * this.speed * delta / 10;
-                player.player.y += (-Math.sin(player.player.mouseAngle * (Math.PI / 180))) * this.speed * delta / 10;
+                if (player.player.mouseAngle != null) {
+                    player.player.x += (-Math.cos(player.player.mouseAngle * (Math.PI / 180))) * this.speed * delta / 10;
+                    player.player.y += (-Math.sin(player.player.mouseAngle * (Math.PI / 180))) * this.speed * delta / 10;
+                };
                 if (player.player.y < 0) player.player.y = 0;
                 else if (player.player.y > 10000) player.player.y = 10000; 
                 if (player.player.x < 0) player.player.x = 0;
@@ -47,6 +58,7 @@ class Game {
                 if (id == this.id || id == 'background') this.background.drawBack(player.player);
                 if (id == this.id) this.canvas.map[this.canvas.map.length - 1].self = true;
 
+                if (!this.run) return;
                 if (id == this.id) {
                     this.coords.x.innerHTML = Math.round(player.player.x);
                     this.coords.y.innerHTML = Math.round(player.player.y);
@@ -69,13 +81,13 @@ class Game {
                 }
                 else if (player.index != undefined) {
                     if (areaView.x <= player.player.x && areaView.x + innerWidth >= player.player.x && areaView.y <= player.player.y && areaView.y + innerHeight >= player.player.y) {
-                        this.canvas.display[player.index].x = player.player.x % innerWidth;
-                        this.canvas.display[player.index].y = player.player.y % innerHeight;
+                        this.canvas.display[player.index].x = player.player.x - areaView.x;
+                        this.canvas.display[player.index].y = player.player.y - areaView.y;
                         this.canvas.display[player.index].cancel = false;
 
                         this.canvas.usernames.push({
-                            x: player.player.x % innerWidth,
-                            y: (player.player.y % innerHeight) - 30,
+                            x: player.player.x - areaView.x,
+                            y: (player.player.y - areaView.y) - 30,
                             username: player.player.username
                         });
                     }
@@ -87,8 +99,8 @@ class Game {
             });
         };
         window.addEventListener('mousemove', (ev) => {
-            let x = [this.canvas.display[this.players[this.id]?.index]?.x || innerWidth / 2, ev.x];
-            let y = [this.canvas.display[this.players[this.id]?.index]?.y || innerHeight / 2, ev.y];
+            let x = [this.canvas.display[this.players[this.id]?.index]?.x ?? innerWidth / 2, ev.x];
+            let y = [this.canvas.display[this.players[this.id]?.index]?.y ?? innerHeight / 2, ev.y];
 
             x = x[0] - x[1];
             y = y[0] - y[1];
