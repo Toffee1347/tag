@@ -39,7 +39,7 @@
         game.players[id].player.y = y;
     });
 
-    const form = $('form');
+    const form = $('#join');
     const loginScreen = $('#login');
     const cover = $('#cover');
     const coords = $('#coords');
