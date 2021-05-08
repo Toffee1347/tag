@@ -7,6 +7,7 @@
         document.body.style.opacity = 1;
         let background = new BackgroundCanvas(canvas, '/static/img/background.jpg');
         game = new Game(canvas, socket.id, background, $('#X'), $('#Y'));
+        // $('#playerImg').src = '/static/img/gameAssets/player.png';
     });
     
         
@@ -44,6 +45,8 @@
     const cover = $('#cover');
     const coords = $('#coords');
     form.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+
         var field = document.createElement('input');
         field.type = 'text';
         document.body.appendChild(field);
@@ -69,4 +72,8 @@ function createImage(src) {
     let img = new Image();
     img.src = src;
     return img;
+};
+
+async function changeSize(img, width, height) {
+
 };

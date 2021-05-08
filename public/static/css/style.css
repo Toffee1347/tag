@@ -73,3 +73,10 @@ input[type="submit"]:hover {
     background: black;
     transition: all 0.3s ease-in;
 }
+
+.skin-select {
+    background: rgba(100, 100, 100, 0.7);
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+}

@@ -11,10 +11,17 @@
 <body style="opacity: 0; transition: all 0.5s ease-in;">
     <div id="login" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10; transition: all 0.5s ease-in; transition-property: top;">
         <h1>Play Tag!</h1>
-        <form id="join" style="position: relative;">
+        <form id="join" style="position: relative; width: min-content; margin-left: auto; margin-right: auto;">
             <input type="text" placeholder="Username" minlength="3" maxlength="10" required>
             <input style="position: absolute; right: 0px; top: 0px;" type="submit" value="Play!">
         </form>
+        <br>
+        <div class="skin-select">
+            <h2>Customise your skin!</h2>
+            <!-- <div style="top: 50%; left: 0; transform: translateX(-20%);">
+                <img id="playerImg">
+            </div> -->
+        </div>
     </div>
 
     <section id="cover" class="back" style="opacity: 0.3;"></section>
